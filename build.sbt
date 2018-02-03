@@ -10,6 +10,8 @@ libraryDependencies ++= Dependencies.cryptomonitor
 
 configs(IntegrationTest)
 
+Seq(Defaults.itSettings: _*)
+
 scapegoatVersion in ThisBuild := scapegoatV
 scapegoatDisabledInspections := Seq(
   "IncorrectlyNamedExceptions",
