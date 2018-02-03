@@ -1,0 +1,5 @@
+export POSTGRES_DB='cryptomonitor'
+export POSTGRES_TEST_DB='cryptomonitor-test'
+export POSTGRES_SERVICE_HOST='localhost'
+export POSTGRESQL_USERNAME='postgres'
+export POSTGRESQL_PASSWORD='postgres'

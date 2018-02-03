@@ -10,12 +10,11 @@ object Version {
   val enumeratum    = "1.5.12"
   val logbackV      = "1.2.3"
   val macwireV      = "2.3.0"
-  val pgDriver      = "42.1.1"
+  val pgDriverV     = "42.1.1"
   val scalaTestV    = "3.0.5"
   val scapegoatV    = "1.3.3"
-  val slick         = "3.2.1"
-  val slickCats     = "0.6"
-  val slickPg       = "0.15.3"
+  val slickV        = "3.2.1"
+  val slickPgV      = "0.15.3"
 
 }
 
@@ -42,12 +41,10 @@ object Library {
   val macwireUtil   = "com.softwaremill.macwire" %% "util"   % macwireV
 
   // slick
-  val slickBundle = Seq(
-    "com.typesafe.slick"  %% "slick"          % Version.slick,
-    "com.typesafe.slick"  %% "slick-hikaricp" % Version.slick,
-    "com.github.tminglei" %% "slick-pg"       % Version.slickPg,
-    "org.postgresql"      % "postgresql"      % Version.pgDriver
-  )
+  val postgres    = "org.postgresql"      % "postgresql"      % Version.pgDriverV
+  val slick       = "com.typesafe.slick"  %% "slick"          % slickV
+  val slickHikari = "com.typesafe.slick"  %% "slick-hikaricp" % slickV
+  val slickPg     = "com.github.tminglei" %% "slick-pg"       % slickPgV
 
   // others
   val cats            = "org.typelevel"  %% "cats"             % Version.cats
@@ -60,15 +57,18 @@ object Library {
 object Dependencies {
   import Library._
 
-  val apiCore = Seq(
+  val cryptomonitor = Seq(
     akkaHttpCore,
     akkaHttp,
     akkaHttpTestkit % "test,it",
     akkaSfl4j,
-    scalatest % "test,it",
     logback,
-    scalatest,
     macwireMacros % "provided",
-    macwireUtil
+    macwireUtil,
+    scalatest % "test,it",
+    postgres,
+    slick,
+    slickHikari,
+    slickPg
   )
 }

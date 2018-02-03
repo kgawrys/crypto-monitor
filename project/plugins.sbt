@@ -7,5 +7,5 @@ addSbtPlugin("com.sksamuel.scapegoat" %% "sbt-scapegoat"         % "1.0.7")
 addSbtPlugin("io.spray"               % "sbt-revolver"           % "0.9.1")
 addSbtPlugin("org.scalastyle"         %% "scalastyle-sbt-plugin" % "1.0.0")
 
+resolvers += "Flyway" at "https://davidmweber.github.io/flyway-sbt.repo"
 addSbtPlugin("org.flywaydb" % "flyway-sbt" % "4.2.0")
-resolvers += "Flyway" at "https://flywaydb.org/repo"
