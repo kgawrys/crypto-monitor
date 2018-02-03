@@ -7,6 +7,7 @@ object Version {
   val macwireV   = "2.2.5"
   val scalaTestV = "3.0.1"
   val commonsV   = "3.4"
+  val scapegoatV = "1.3.3"
 }
 
 object Library {
