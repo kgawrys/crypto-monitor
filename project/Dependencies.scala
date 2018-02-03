@@ -1,7 +1,7 @@
 import sbt._
 
 object Version {
-  val akkaV         = "2.5.9"
+  val akkaV         = "2.4.20"
   val akkaHttpV     = "10.0.11"
   val akkaHttpCirce = "1.15.0"
   val cats          = "0.9.0"
@@ -21,6 +21,8 @@ object Version {
 
 object Library {
   import Version._
+
+  val akkaSfl4j = "com.typesafe.akka" %% "akka-slf4j" % akkaV
 
   // http
   val akkaHttpCore    = "com.typesafe.akka" %% "akka-http-core"    % akkaHttpV
@@ -61,9 +63,9 @@ object Dependencies {
   val apiCore = Seq(
     akkaHttpCore,
     akkaHttp,
-    akkaHttpTestkit,
     akkaHttpTestkit % "test,it",
-    scalatest       % "test,it",
+    akkaSfl4j,
+    scalatest % "test,it",
     logback,
     scalatest,
     macwireMacros % "provided",
