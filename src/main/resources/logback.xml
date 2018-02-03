@@ -1,0 +1,58 @@
+<configuration>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>DEBUG</level>
+        </filter>
+        <encoder>
+            <pattern>%magenta(%d{yyyy-MM-dd HH:mm:ss.SSSX}) %highlight(%-5level) %green(%-35logger{1}): %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Simple file output -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>/tmp/cryptomonitor/logs/hermes-api.log</file>
+        <append>true</append>
+        <!-- encoder defaults to ch.qos.logback.classic.encoder.PatternLayoutEncoder -->
+        <encoder>
+            <pattern>%magenta(%d{yyyy-MM-dd HH:mm:ss.SSSX}) %highlight(%-5level) %green(%-35logger{1}): %msg%n</pattern>
+        </encoder>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- rollover daily -->
+            <fileNamePattern>/tmp/cryptomonitor/logs/cryptomonitor-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!-- or whenever the file size reaches 64 MB -->
+                <maxFileSize>64 MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>28</maxHistory>
+        </rollingPolicy>
+
+        <!-- Safely log to the same file from multiple JVMs. Degrades performance! -->
+        <!--<prudent>true</prudent>-->
+    </appender>
+
+    <logger name="akka.actor.RepointableActorRef" level="INFO"/>
+    <logger name="akka.http.impl.engine.client.PoolGateway" level="INFO"/>
+    <logger name="akka.stream.impl.io.TLSActor" level="INFO"/>
+    <logger name="akka.io.TcpOutgoingConnection" level="INFO"/>
+    <logger name="akka.io.SimpleDnsManager" level="INFO"/>
+    <logger name="com.typesafe.sslconfig.ssl.DefaultHostnameVerifier" level="INFO"/>
+
+    <logger name="slick" level="INFO"/>
+    <logger name="slick.session" level="INFO"/>
+    <!-- uncomment below for slick debugging -->
+    <!--<logger name="slick.jdbc.JdbcBackend" level="DEBUG"/>-->
+
+    <!--<logger name="com.zaxxer.hikari.HikariConfig" level="WARN"/>-->
+    <logger name="com.zaxxer.hikari.pool.PoolUtilities" level="DEBUG"/>
+    <logger name="com.zaxxer.hikari.HikariDataSource" level="DEBUG"/>
+    <logger name="com.zaxxer.hikari.pool.HikariPool" level="DEBUG"/>
+
+    <root level="TRACE">
+        <appender-ref ref="Sentry"/>
+        <appender-ref ref="FILE"/>
+        <appender-ref ref="STDOUT"/>
+    </root>
+
+</configuration>
