@@ -9,7 +9,7 @@ import akka.http.scaladsl.unmarshalling.Unmarshal
 import akka.stream.Materializer
 import com.typesafe.scalalogging.StrictLogging
 import cryptomonitor.coinmarketcap.domain.CoinMarketCapStatus.{ResponseParsingError, UnexpectedError}
-import cryptomonitor.coinmarketcap.domain.{CoinMarketCapApiConfig, CoinMarketCapStatus, TickerData}
+import cryptomonitor.coinmarketcap.domain.{CoinMarketCapApiConfig, CoinMarketCapStatus, Tick}
 import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport
 import io.circe.generic.auto._
 
@@ -23,7 +23,7 @@ class CoinMarketCapApiService(coinmarketcapApiConfig: CoinMarketCapApiConfig)(im
     extends FailFastCirceSupport
     with StrictLogging {
 
-  def getAllTickerdata: Future[Either[CoinMarketCapStatus, Seq[TickerData]]] = {
+  def getAllTickerdata: Future[Either[CoinMarketCapStatus, Seq[Tick]]] = {
     val request = createRequest(Uri(coinmarketcapApiConfig.uri))
     logger.trace("CoinMarketCap library request sent {} ", request)
     sendRequest(request)
@@ -36,7 +36,7 @@ class CoinMarketCapApiService(coinmarketcapApiConfig: CoinMarketCapApiConfig)(im
       response.status match {
         case OK =>
           Unmarshal(response.entity)
-            .to[Seq[TickerData]]
+            .to[Seq[Tick]]
             .map(Right(_))
             .recover {
               case NonFatal(e) =>

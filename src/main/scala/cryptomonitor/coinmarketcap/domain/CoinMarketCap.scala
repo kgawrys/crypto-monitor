@@ -6,7 +6,7 @@ object CoinMarketCapStatus {
   case class ResponseParsingError(t: Throwable) extends CoinMarketCapStatus
 }
 
-case class TickerData(
+case class Tick(
     id: String,
     name: String,
     symbol: String,

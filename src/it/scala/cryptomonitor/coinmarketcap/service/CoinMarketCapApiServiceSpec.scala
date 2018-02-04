@@ -1,7 +1,7 @@
 package cryptomonitor.coinmarketcap.service
 
 import akka.http.scaladsl.testkit.ScalatestRouteTest
-import cryptomonitor.coinmarketcap.domain.{CoinMarketCapApiConfig, TickerData}
+import cryptomonitor.coinmarketcap.domain.{CoinMarketCapApiConfig, Tick}
 import org.scalatest.mockito.MockitoSugar
 import org.scalatest.{AsyncFlatSpec, Matchers}
 
@@ -19,7 +19,7 @@ class CoinMarketCapApiServiceSpec extends AsyncFlatSpec with Matchers with Mocki
       result <- coinMarketCapApiService.getAllTickerdata
     } yield {
       val results = result.right.get
-      results.head shouldBe a[TickerData]
+      results.head shouldBe a[Tick]
       results.size shouldBe 10
     }
   }
