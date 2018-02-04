@@ -6,6 +6,8 @@ import akka.http.scaladsl.Http
 import akka.http.scaladsl.server.Directives._
 import akka.stream.{ActorMaterializer, Materializer}
 import com.typesafe.config.ConfigFactory
+import cryptomonitor.coinmarketcap.domain.CoinMarketCapApiConfig
+import cryptomonitor.coinmarketcap.service.CoinMarketCapApiService
 import cryptomonitor.health.routers.HealthCheckRouter
 
 import scala.concurrent.ExecutionContext
@@ -22,11 +24,18 @@ trait Setup {
   lazy val logger = Logging(system, getClass)
   lazy val config = ConfigFactory.load()
 
+  lazy val coinMarketCapApiConfig: CoinMarketCapApiConfig = CoinMarketCapApiConfig(
+    uri = config.getString("coinMarketCap.api.allTickerUri")
+  )
+
   lazy val serverConfig = ServerConfig(
     interface = config.getString("http.interface"),
     port      = config.getInt("http.port"),
     hostname  = config.getString("http.hostname")
   )
+
+  lazy val coinMarketCapApiService: CoinMarketCapApiService = wire[CoinMarketCapApiService]
+
   lazy val healthCheckRouter: HealthCheckRouter = wire[HealthCheckRouter]
 
   lazy val routes = logRequestResult("crypto-monitor") {
