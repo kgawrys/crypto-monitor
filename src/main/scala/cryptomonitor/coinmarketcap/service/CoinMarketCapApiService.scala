@@ -25,7 +25,7 @@ class CoinMarketCapApiService(coinmarketcapApiConfig: CoinMarketCapApiConfig)(im
     with CryptoMonitorJsonSupport
     with StrictLogging {
 
-  def getAllTickerdata: Future[Either[CoinMarketCapStatus, Seq[Tick]]] = {
+  def getTickerdata: Future[Either[CoinMarketCapStatus, Seq[Tick]]] = {
     val request = createRequest(Uri(coinmarketcapApiConfig.uri))
     logger.trace("CoinMarketCap library request sent {} ", request)
     sendRequest(request)

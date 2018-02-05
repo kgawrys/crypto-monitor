@@ -12,7 +12,7 @@ class CoinMarketCapApiServiceSpec extends IntegrationAsyncTestSuite with Integra
 
   it should "build tick response" in {
     for {
-      result <- coinMarketCapApiService.getAllTickerdata
+      result <- coinMarketCapApiService.getTickerdata
     } yield {
       val results = result.right.get
       results.head shouldBe a[Tick]
