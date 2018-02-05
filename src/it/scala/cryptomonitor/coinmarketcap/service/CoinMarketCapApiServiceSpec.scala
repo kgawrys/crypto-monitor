@@ -1,18 +1,14 @@
 package cryptomonitor.coinmarketcap.service
 
-import akka.http.scaladsl.testkit.ScalatestRouteTest
 import cryptomonitor.coinmarketcap.domain.{CoinMarketCapApiConfig, Tick}
-import org.scalatest.mockito.MockitoSugar
-import org.scalatest.{AsyncFlatSpec, Matchers}
+import cryptomonitor.common.{IntegrationAsyncTestSuite, IntegrationTestModule}
 
-class CoinMarketCapApiServiceSpec extends AsyncFlatSpec with Matchers with MockitoSugar with ScalatestRouteTest {
+class CoinMarketCapApiServiceSpec extends IntegrationAsyncTestSuite with IntegrationTestModule {
 
   val allTickers     = "https://api.coinmarketcap.com/v1/ticker/?limit=0"
   val first10Tickers = "https://api.coinmarketcap.com/v1/ticker/?limit=10"
 
-  val config = CoinMarketCapApiConfig(first10Tickers)
-
-  val coinMarketCapApiService = new CoinMarketCapApiService(config)
+  override lazy val coinMarketCapApiConfig = CoinMarketCapApiConfig(first10Tickers)
 
   it should "build tick response" in {
     for {
