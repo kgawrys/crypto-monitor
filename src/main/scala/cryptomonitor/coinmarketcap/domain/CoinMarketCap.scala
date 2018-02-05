@@ -1,5 +1,7 @@
 package cryptomonitor.coinmarketcap.domain
 
+import java.time.Instant
+
 sealed trait CoinMarketCapStatus
 object CoinMarketCapStatus {
   case class UnexpectedError(error: String)     extends CoinMarketCapStatus
@@ -21,7 +23,7 @@ case class Tick(
     percent_change_1h: Float,
     percent_change_24h: Float,
     percent_change_7d: Float,
-    last_updated: Int
+    last_updated: Instant
 )
 
 case class CoinMarketCapApiConfig(uri: String)

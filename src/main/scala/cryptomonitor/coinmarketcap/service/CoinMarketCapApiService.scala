@@ -10,6 +10,7 @@ import akka.stream.Materializer
 import com.typesafe.scalalogging.StrictLogging
 import cryptomonitor.coinmarketcap.domain.CoinMarketCapStatus.{ResponseParsingError, UnexpectedError}
 import cryptomonitor.coinmarketcap.domain.{CoinMarketCapApiConfig, CoinMarketCapStatus, Tick}
+import cryptomonitor.core.json.CryptoMonitorJsonSupport
 import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport
 import io.circe.generic.auto._
 
@@ -21,6 +22,7 @@ class CoinMarketCapApiService(coinmarketcapApiConfig: CoinMarketCapApiConfig)(im
                                                                               mat: Materializer,
                                                                               ec: ExecutionContext)
     extends FailFastCirceSupport
+    with CryptoMonitorJsonSupport
     with StrictLogging {
 
   def getAllTickerdata: Future[Either[CoinMarketCapStatus, Seq[Tick]]] = {
