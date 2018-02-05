@@ -27,7 +27,7 @@ class CoinMarketCapApiService(coinmarketcapApiConfig: CoinMarketCapApiConfig)(im
 
   def getTickerdata: Future[Either[CoinMarketCapStatus, Seq[Tick]]] = {
     val request = createRequest(Uri(coinmarketcapApiConfig.uri))
-    logger.trace("CoinMarketCap library request sent {} ", request)
+    logger.debug("CoinMarketCap library request sent {} ", request)
     sendRequest(request)
   }
 

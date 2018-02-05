@@ -1,5 +1,5 @@
 CREATE TABLE ticks (
-    id serial PRIMARY KEY,
+    id TEXT NOT NULL,
     name TEXT NOT NULL,
     symbol TEXT NOT NULL,
     rank integer NOT NULL,

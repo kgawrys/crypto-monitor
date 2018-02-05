@@ -1,4 +1,4 @@
-package cryptomonitor.coinmarketcap.repository
+package cryptomonitor.tick.repository
 
 import java.time.Instant
 
@@ -9,7 +9,7 @@ import slick.lifted.{ProvenShape, Tag}
 class TickMapping(tag: Tag) extends Table[Tick](tag, "ticks") {
 
   def id: Rep[String]                      = column("id")
-  def name: Rep[String]                    = column("reason")
+  def name: Rep[String]                    = column("name")
   def symbol: Rep[String]                  = column("symbol")
   def rank: Rep[Int]                       = column("rank")
   def priceUsd: Rep[Double]                = column("price_usd")

@@ -9,6 +9,9 @@ import com.typesafe.config.ConfigFactory
 import cryptomonitor.coinmarketcap.domain.CoinMarketCapApiConfig
 import cryptomonitor.coinmarketcap.service.CoinMarketCapApiService
 import cryptomonitor.health.routers.HealthCheckRouter
+import cryptomonitor.tick.repository.TickRepository
+import cryptomonitor.tick.service.TickUploaderService
+import slick.jdbc.PostgresProfile.api._
 
 import scala.concurrent.ExecutionContext
 
@@ -24,6 +27,8 @@ trait Setup {
   lazy val logger = Logging(system, getClass)
   lazy val config = ConfigFactory.load()
 
+  lazy val db = Database.forConfig("postgres", config)
+
   lazy val coinMarketCapApiConfig: CoinMarketCapApiConfig = CoinMarketCapApiConfig(
     uri = config.getString("coinMarketCap.api.allTickerUri")
   )
@@ -34,7 +39,10 @@ trait Setup {
     hostname  = config.getString("http.hostname")
   )
 
+  lazy val tickRepository: TickRepository = wire[TickRepository]
+
   lazy val coinMarketCapApiService: CoinMarketCapApiService = wire[CoinMarketCapApiService]
+  lazy val tickUploaderService: TickUploaderService         = wire[TickUploaderService]
 
   lazy val healthCheckRouter: HealthCheckRouter = wire[HealthCheckRouter]
 

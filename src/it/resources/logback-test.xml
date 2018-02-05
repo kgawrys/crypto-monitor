@@ -19,7 +19,7 @@
     <logger name="akka.http.impl.engine.client.PoolGateway" level="INFO"/>
     <logger name="akka.stream.impl.io.TLSActor" level="INFO"/>
 
-    <root level="WARN">
+    <root level="DEBUG">
         <appender-ref ref="STDOUT"/>
     </root>
 </configuration>
