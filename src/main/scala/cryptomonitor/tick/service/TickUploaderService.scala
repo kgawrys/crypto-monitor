@@ -44,7 +44,7 @@ class TickUploaderService(
       }
       .recover {
         case e =>
-          val msg = s"Failure during tick row adding"
+          val msg = "Failure during tick row adding"
           logger.error(msg, e)
           FailureUpload(e)
       }
