@@ -3,20 +3,20 @@ import sbt._
 object Version {
   val akkaV          = "2.4.20"
   val akkaHttpV      = "10.0.11"
-  val akkaHttpCirceV = "1.15.0"
+  val akkaHttpCirceV = "1.19.0"
   val catsV          = "0.9.0"
-  val circeV         = "0.7.1"
+  val circeV         = "0.9.1"
   val commonsV       = "3.4"
   val enumeratumV    = "1.5.12"
   val logbackV       = "1.2.3"
   val macwireV       = "2.3.0"
   val mockitoV       = "1.10.19"
-  val pgDriverV      = "42.1.1"
-  val scalaLoggingV  = "3.5.0"
+  val pgDriverV      = "42.2.1"
+  val scalaLoggingV  = "3.7.2"
   val scalaTestV     = "3.0.5"
-  val scapegoatV     = "1.3.3"
+  val scapegoatV     = "1.3.4"
   val slickV         = "3.2.1"
-  val slickPgV       = "0.15.3"
+  val slickPgV       = "0.15.7"
 
 }
 
