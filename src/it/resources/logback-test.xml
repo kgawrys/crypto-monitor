@@ -19,7 +19,9 @@
     <logger name="akka.http.impl.engine.client.PoolGateway" level="INFO"/>
     <logger name="akka.stream.impl.io.TLSActor" level="INFO"/>
 
-    <root level="DEBUG">
+    <logger name="cryptomonitor.core.postgres.PgDriver" level="WARN"/>
+
+    <root level="INFO">
         <appender-ref ref="STDOUT"/>
     </root>
 </configuration>
