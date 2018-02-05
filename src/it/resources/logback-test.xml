@@ -1,0 +1,25 @@
+<configuration scan="false">
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%magenta(%d{yyyy-MM-dd HH:mm:ss.SSSX}) %highlight(%-5level) %green(%-35logger{1}): %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="slick" level="INFO"/>
+    <logger name="slick.session" level="INFO"/>
+    <!-- set to DEBUG for slick debugging -->
+    <logger name="slick.jdbc.JdbcBackend" level="INFO"/>
+
+    <logger name="com.zaxxer.hikari.HikariConfig" level="WARN"/>
+    <logger name="com.zaxxer.hikari.pool.PoolUtilities" level="WARN"/>
+    <logger name="com.zaxxer.hikari.HikariDataSource" level="WARN"/>
+    <logger name="com.zaxxer.hikari.pool.HikariPool" level="WARN"/>
+
+    <logger name="akka.actor.RepointableActorRef" level="INFO"/>
+    <logger name="akka.http.impl.engine.client.PoolGateway" level="INFO"/>
+    <logger name="akka.stream.impl.io.TLSActor" level="INFO"/>
+
+    <root level="WARN">
+        <appender-ref ref="STDOUT"/>
+    </root>
+</configuration>
