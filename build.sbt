@@ -12,6 +12,11 @@ configs(IntegrationTest)
 
 Seq(Defaults.itSettings: _*)
 
+PostgresMigrations.settings
+inConfig(IntegrationTest)(
+  PostgresMigrations.itSettings ++ Seq(executeTests := (executeTests dependsOn flywayMigrate).value,
+    flywayMigrate := (flywayMigrate dependsOn flywayClean).value))
+
 // ALIASES
 addCommandAlias("compileAll", ";compile;test:compile;it:compile")
 
