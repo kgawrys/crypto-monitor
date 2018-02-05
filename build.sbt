@@ -12,6 +12,9 @@ configs(IntegrationTest)
 
 Seq(Defaults.itSettings: _*)
 
+// ALIASES
+addCommandAlias("compileAll", ";compile;test:compile;it:compile")
+
 scapegoatVersion in ThisBuild := scapegoatV
 scapegoatDisabledInspections := Seq(
   "IncorrectlyNamedExceptions",
