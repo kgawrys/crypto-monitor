@@ -1,4 +1,4 @@
-CREATE TABLE tickers (
+CREATE TABLE ticks (
     id serial PRIMARY KEY,
     name TEXT NOT NULL,
     symbol TEXT NOT NULL,
