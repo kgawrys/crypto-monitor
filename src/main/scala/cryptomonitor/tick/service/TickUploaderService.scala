@@ -4,9 +4,9 @@ import cats.data.EitherT
 import cats.implicits.catsStdInstancesForFuture
 import com.typesafe.scalalogging.StrictLogging
 import cryptomonitor.coinmarketcap.domain.{CoinMarketCapStatus, Tick}
-import cryptomonitor.tick.repository.TickRepository
 import cryptomonitor.coinmarketcap.service.CoinMarketCapApiService
 import cryptomonitor.core.postgres.PgDriver.api._
+import cryptomonitor.tick.repository.TickRepository
 
 import scala.concurrent.{ExecutionContext, Future}
 
