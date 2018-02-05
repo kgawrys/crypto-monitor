@@ -14,13 +14,14 @@ class CoinMarketCapApiServiceSpec extends AsyncFlatSpec with Matchers with Mocki
 
   val coinMarketCapApiService = new CoinMarketCapApiService(config)
 
-  it should "build npm metadata url" in {
+  it should "build tick response" in {
     for {
       result <- coinMarketCapApiService.getAllTickerdata
     } yield {
       val results = result.right.get
       results.head shouldBe a[Tick]
       results.size shouldBe 10
+
     }
   }
 
