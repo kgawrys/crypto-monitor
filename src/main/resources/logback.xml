@@ -31,6 +31,7 @@
         <!-- Safely log to the same file from multiple JVMs. Degrades performance! -->
         <!--<prudent>true</prudent>-->
     </appender>
+    <logger name="cryptomonitor.core.postgres.PgDriver" level="WARN"/>
 
     <logger name="akka.actor.RepointableActorRef" level="INFO"/>
     <logger name="akka.http.impl.engine.client.PoolGateway" level="INFO"/>
