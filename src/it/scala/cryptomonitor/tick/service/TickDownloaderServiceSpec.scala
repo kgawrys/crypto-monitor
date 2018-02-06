@@ -1,6 +1,6 @@
 package cryptomonitor.tick.service
 
-import cryptomonitor.coinmarketcap.domain.{CoinMarketCapApiConfig, Tick}
+import cryptomonitor.coinmarketcap.domain.CoinMarketCapApiConfig
 import cryptomonitor.common.{IntegrationAsyncTestSuite, IntegrationTestModule}
 
 class TickDownloaderServiceSpec extends IntegrationAsyncTestSuite with IntegrationTestModule {
