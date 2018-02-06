@@ -4,9 +4,9 @@ import akka.actor.Actor
 
 case object Fire
 
-class UploadActor extends Actor {
+class TickDownloadActor extends Actor {
   def receive = {
-    case Fire => println("uploading...,")
+    case Fire => println("downloading...,")
     case _    => println("huh?")
   }
 }

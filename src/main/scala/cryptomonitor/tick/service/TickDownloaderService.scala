@@ -10,43 +10,43 @@ import cryptomonitor.tick.repository.TickRepository
 
 import scala.concurrent.{ExecutionContext, Future}
 
-sealed trait TickUploadResult
-case class OkUpload(ticksAdded: Int)       extends TickUploadResult
-case object NoRowsAddedOkUpload            extends TickUploadResult
-case class FailureUpload(error: Throwable) extends TickUploadResult
+sealed trait TickDownloadResult
+case class OkDownload(ticksAdded: Int)       extends TickDownloadResult
+case object NoRowsAddedOkDownload            extends TickDownloadResult
+case class FailureDownload(error: Throwable) extends TickDownloadResult
 
-class TickUploaderService(
+class TickDownloaderService(
     tickRepository: TickRepository,
     coinMarketCapApiService: CoinMarketCapApiService,
     db: Database
 )(implicit ec: ExecutionContext)
     extends StrictLogging {
 
-  def uploadTicks: Future[Either[CoinMarketCapStatus, TickUploadResult]] = {
-    logger.info(s"Started uploading ticks")
+  def downloadTicks: Future[Either[CoinMarketCapStatus, TickDownloadResult]] = {
+    logger.info(s"Started downloading ticks")
     (for {
       ticks        <- EitherT(coinMarketCapApiService.getTickerdata)
-      insertResult <- EitherT.liftT[Future, CoinMarketCapStatus, TickUploadResult](insertTicks(ticks))
+      insertResult <- EitherT.liftT[Future, CoinMarketCapStatus, TickDownloadResult](insertTicks(ticks))
     } yield insertResult).value
   }
 
-  private def insertTicks(ticks: Seq[Tick]): Future[TickUploadResult] = {
+  private def insertTicks(ticks: Seq[Tick]): Future[TickDownloadResult] = {
     val insertsFut = db.run(tickRepository.insertBatch(ticks))
 
     insertsFut
       .map {
         case Some(rowsAdded) =>
           logger.info(s"Successfully added $rowsAdded tick rows.")
-          OkUpload(rowsAdded)
+          OkDownload(rowsAdded)
         case None =>
           logger.error("Successfully finished future, but no tick rows were added")
-          NoRowsAddedOkUpload
+          NoRowsAddedOkDownload
       }
       .recover {
         case e =>
           val msg = "Failure during tick row adding"
           logger.error(msg, e)
-          FailureUpload(e)
+          FailureDownload(e)
       }
   }
 }

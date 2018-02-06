@@ -11,7 +11,7 @@ import cryptomonitor.coinmarketcap.domain.CoinMarketCapApiConfig
 import cryptomonitor.coinmarketcap.service.CoinMarketCapApiService
 import cryptomonitor.health.routers.HealthCheckRouter
 import cryptomonitor.tick.repository.TickRepository
-import cryptomonitor.tick.service.{Fire, TickUploaderService, UploadActor}
+import cryptomonitor.tick.service.{Fire, TickDownloaderService, TickDownloadActor}
 import slick.jdbc.PostgresProfile.api._
 
 import scala.concurrent.ExecutionContext
@@ -40,12 +40,12 @@ trait Setup {
     hostname  = config.getString("http.hostname")
   )
 
-  lazy val fireUploadActor = system.actorOf(Props[UploadActor])
+  lazy val tickDownloadActor = system.actorOf(Props[TickDownloadActor])
 
   lazy val tickRepository: TickRepository = wire[TickRepository]
 
   lazy val coinMarketCapApiService: CoinMarketCapApiService = wire[CoinMarketCapApiService]
-  lazy val tickUploaderService: TickUploaderService         = wire[TickUploaderService]
+  lazy val tickDownloaderService: TickDownloaderService     = wire[TickDownloaderService]
 
   lazy val healthCheckRouter: HealthCheckRouter = wire[HealthCheckRouter]
 
@@ -61,7 +61,7 @@ object Main extends App with Setup {
   implicit val materializer = ActorMaterializer()
 
   val scheduler = QuartzSchedulerExtension(system)
-  QuartzSchedulerExtension(system).schedule("Every5Seconds", fireUploadActor, Fire)
+  QuartzSchedulerExtension(system).schedule("Every5Seconds", tickDownloadActor, Fire)
 
   Http()
     .bindAndHandle(routes, serverConfig.interface, serverConfig.port)
