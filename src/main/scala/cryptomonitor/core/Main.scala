@@ -1,6 +1,6 @@
 package cryptomonitor.core
 
-import akka.actor.{ActorSystem, Props}
+import akka.actor.{ActorRef, ActorSystem, Props}
 import akka.event.Logging
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.server.Directives._
@@ -11,7 +11,7 @@ import cryptomonitor.coinmarketcap.domain.CoinMarketCapApiConfig
 import cryptomonitor.coinmarketcap.service.CoinMarketCapApiService
 import cryptomonitor.health.routers.HealthCheckRouter
 import cryptomonitor.tick.repository.TickRepository
-import cryptomonitor.tick.service.{Fire, TickDownloaderService, TickDownloadActor}
+import cryptomonitor.tick.service.{Fire, TickDownloadActor, TickDownloaderService}
 import slick.jdbc.PostgresProfile.api._
 
 import scala.concurrent.ExecutionContext
@@ -40,7 +40,7 @@ trait Setup {
     hostname  = config.getString("http.hostname")
   )
 
-  lazy val tickDownloadActor = system.actorOf(Props[TickDownloadActor])
+  lazy val tickDownloadActor: ActorRef = system.actorOf(Props(new TickDownloadActor(tickDownloaderService)))
 
   lazy val tickRepository: TickRepository = wire[TickRepository]
 
@@ -61,7 +61,7 @@ object Main extends App with Setup {
   implicit val materializer = ActorMaterializer()
 
   val scheduler = QuartzSchedulerExtension(system)
-  QuartzSchedulerExtension(system).schedule("Every5Seconds", tickDownloadActor, Fire)
+  QuartzSchedulerExtension(system).schedule("Every5Minutes", tickDownloadActor, Fire)
 
   Http()
     .bindAndHandle(routes, serverConfig.interface, serverConfig.port)
